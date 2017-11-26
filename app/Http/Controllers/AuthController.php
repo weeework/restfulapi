@@ -40,12 +40,12 @@ class AuthController extends Controller
             try {
                 if (!$token = JWTAuth::attempt($credentials)) {
                     return response()->json([
-                        'msg' => 'Email or Password are incorrect',
+                        'message' => 'Email or Password are incorrect',
                     ], 404);
                 }
             } catch (JWTAuthException $e) {
                 return response()->json([
-                    'msg' => 'failed_to_create_token',
+                    'message' => 'failed_to_create_token',
                 ],404);
             }
 
@@ -55,7 +55,7 @@ class AuthController extends Controller
                 'params' => 'email, password'
             ];
             $response = [
-                'msg' => 'User created',
+                'message' => 'User created',
                 'user' => $user,
                 'token' => $token
             ];
@@ -63,7 +63,7 @@ class AuthController extends Controller
         }
 
         $response = [
-            'msg' => 'An error occurred'
+            'message' => 'An error occurred'
         ];
 
         return response()->json($response, 404);
@@ -90,17 +90,17 @@ class AuthController extends Controller
             try {
                 if (!$token = JWTAuth::attempt($credentials)) {
                     return response()->json([
-                        'msg' => 'Email or Password are incorrect',
+                        'message' => 'Email or Password are incorrect',
                     ], 404);
                 }
             } catch (JWTAuthException $e) {
                 return response()->json([
-                    'msg' => 'failed_to_create_token',
+                    'message' => 'failed_to_create_token',
                 ],404);
             }
 
             $response = [
-                'msg' => 'User signin',
+                'message' => 'User signin',
                 'user' => $user,
                 'token' => $token
             ];
@@ -109,7 +109,7 @@ class AuthController extends Controller
         }
 
         $response = [
-            'msg' => 'An error occurred'
+            'message' => 'An error occurred'
         ];
 
         return response()->json($response, 404);

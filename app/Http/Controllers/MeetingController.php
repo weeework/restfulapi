@@ -32,7 +32,7 @@ class MeetingController extends Controller
         }
 
         $response = [
-            'msg' => 'List of all Meetings',
+            'message' => 'List of all Meetings',
             'meetings' => $meetings
         ];
 
@@ -72,14 +72,14 @@ class MeetingController extends Controller
                 'method' => 'GET'
             ];
             $message = [
-                'msg' => 'Meeting created',
+                'message' => 'Meeting created',
                 'meeting' => $meeting
             ];
             return response()->json($message, 201);
         }
 
         $response = [
-            'msg' => 'Error during creationg'
+            'message' => 'Error during creationg'
         ];
 
         return response()->json($response, 404);
@@ -100,7 +100,7 @@ class MeetingController extends Controller
         ];
 
         $response = [
-            'msg' => 'Meeting information',
+            'message' => 'Meeting information',
             'meeting' => $meeting
         ];
         return response()->json($response, 200);
@@ -130,7 +130,7 @@ class MeetingController extends Controller
         $meeting = Meeting::with('users')->findOrFail($id);
 
         if (!$meeting->users()->where('users.id', $user_id)->first()) {
-            return response()->json(['msg' => 'user not registered for meeting, update not successful'], 401);
+            return response()->json(['message' => 'user not registered for meeting, update not successful'], 401);
         };
 
         $meeting-> time = $time;
@@ -139,7 +139,7 @@ class MeetingController extends Controller
 
         if(!$meeting->update()){
             return response()->json([
-                'msg' => 'Error during update'
+                'message' => 'Error during update'
             ], 404);
         }
 
@@ -149,7 +149,7 @@ class MeetingController extends Controller
         ];
 
         $response = [
-            'msg' => 'Meeting Updated',
+            'message' => 'Meeting Updated',
             'meeting' => $meeting
         ];
 
@@ -173,12 +173,12 @@ class MeetingController extends Controller
                 $meeting->users()->attach($user);
             }
             return response()->json([
-                'msg' => 'Deletion Failed'
+                'message' => 'Deletion Failed'
             ], 404);
         }
 
         $response = [
-            'msg' => 'Meeting deleted',
+            'message' => 'Meeting deleted',
             'create' => [
                 'href' => 'api/v1/meeting',
                 'method' => 'POST',

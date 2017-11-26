@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use JWTAuth;
 
 use App\User;
 use App\Meeting;
@@ -34,7 +35,7 @@ class RegisterController extends Controller
         $user = User::findOrFail($user_id);
 
         $message = [
-            'msg' => 'User is already registered for meeting',
+            'message' => 'User is already registered for meeting',
             'user' => $user,
             'meeting' => $meeting,
             'unregister' => [
@@ -50,7 +51,7 @@ class RegisterController extends Controller
         $user->meetings()->attach($meeting);
 
         $response = [
-            'msg' => 'User registered for meeting',
+            'message' => 'User registered for meeting',
             'meeting' => $meeting,
             'user' => $user,
             'unregister' => [
@@ -69,13 +70,14 @@ class RegisterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $user = JWTAuth::toUser($request['token']);
         $meeting = Meeting::findOrFail($id);
-        $meeting->users()->detach();
+        $meeting->users()->detach($user->id);
 
         $response = [
-            'msg' => 'User unregistered for meeting',
+            'message' => 'User unregistered for meeting',
             'meeting' => $meeting,
             'user' => 'tbd',
             'register' => [
